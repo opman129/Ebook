@@ -4,7 +4,9 @@ const stripe = require('stripe')('Secret_Key');
 const exphbs = require('express-handlebars');
 const path = require('path');
 
+//Initialize Express App
 const app = express();
+
 //Middleware
 //Set up Handlebars View engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
