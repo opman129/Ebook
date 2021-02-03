@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const stripe = require('stripe')('Secret_Key');
+const exphbs = require('express-handlebars')
 
 const app = express();
 //set static folder
