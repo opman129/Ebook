@@ -20,7 +20,31 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Index route
 app.get('/', (req,res) => {
     res.render('index');
-})
+});
+
+//Create Stripe checkout page
+app.post("/create-checkout-session", async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Stubborn Attachments",
+            images: ["https://i.imgur.com/EHyR2nP.png"],
+          },
+          unit_amount: 2000,
+        },
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: `${port}/success.html`,
+    cancel_url: `${port}/cancel.html`,
+  });
+  res.json({ id: session.id });
+});
 
 //Configure Port
 const port = process.env.PORT || 5000;

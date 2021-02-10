@@ -3,23 +3,51 @@
         <div class="col-md-6 text-center">
             <h1 class="display-3 mt-3 pt-5">
                 Web Development Ebook
-            </h1><p class="lead">Learn Web Development Front to Back</p>
-            <form action="/charge" method="POST">
-                <script>
-                    src ="https://checkout.stripe.com/checkout.js"
-                    class="stripe-button"
-                    data-key="sk_test_51IHEepF9udxImohAZ4ny9LUFJJpzALVaqxkOC7XJUwQELoidcQfDywdBQb0Bd5szN60CCxzLsTQZBStkw6on1xo700pA615ZJ9"
-                    data-amount="2500"
-                    data-name="Web Development Ebook"
-                    data-description="Ebook written by Jokotagba Opemipo"
-                    data-image="/img/marketplace.png"
-                    data-locale="auto"
-                    data-zip-code="true"
-                </script>
-            </form>
+            </h1>
+            <p class="lead">Learn Web Development Front to Back</p>
+            <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+            <script src="https://js.stripe.com/v3/"></script>
+            <img src="../public/img/marketplace.png" alt="The cover of Stubborn Attachments" />
+            <div class="description">
+                <h3>Stubborn Attachments</h3>
+                <h5>$20.00</h5>
+            </div>
         </div>
-        <div class="col-md-6">
-            <img src="/img/book.png" alt="" class="img-fluid">
-        </div>
-    </div>
+        <button type="button" id="checkout-button">Checkout</button>
+</section>
+</body>
+<script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("pk_test_51IHEepF9udxImohApaIUWSGGysQsorTtIVxT3u0XwFIChD0MaOafFFLKheyjjso3TIyjjVJEYz8IdsQaFWSd9b9d00Oz7vfilD");
+    var checkoutButton = document.getElementById("checkout-button");
+    checkoutButton.addEventListener("click", function () {
+        fetch("/create-checkout-session", {
+            method: "POST",
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (session) {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function (result) {
+                // If redirectToCheckout fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using error.message.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error:", error);
+            });
+    });
+</script>
+
+</form>
+</div>
+<div class="col-md-6">
+    <img src="/img/book.png" alt="" class="img-fluid">
+</div>
+</div>
 </section>
