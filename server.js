@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const stripe = require('stripe')('Secret_Key');
+const stripe = require('stripe')('sk_test_51IHEepF9udxImohAZ4ny9LUFJJpzALVaqxkOC7XJUwQELoidcQfDywdBQb0Bd5szN60CCxzLsTQZBStkw6on1xo700pA615ZJ9');
 const exphbs = require('express-handlebars');
 const path = require('path');
 
