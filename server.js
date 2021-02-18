@@ -36,7 +36,7 @@ app.post('/charge', (req,res) => {
     currency: 'usd',
     customer: customer.id
   }))
-  .then(charge => res.render('success'))
+  .then(charge => res.render('success'));
 })
 
 //Create Stripe checkout page
