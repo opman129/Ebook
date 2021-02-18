@@ -23,7 +23,21 @@ app.get('/', (req,res) => {
 });
 
 //Create Stripe Charge Route
-app.post('/charge', )
+app.post('/charge', (req,res) => {
+  const amount = 2500;
+  
+  stripe.customers.create({ 
+    email: req.body.stripeEmail,
+    source: req.body.stripeToken
+  })
+  .then(customer => stripe.charges.create({
+    amount,
+    description: 'Web Development Ebook',
+    currency: 'usd',
+    customer: customer.id
+  }))
+  .then(charge => res.render('success'))
+})
 
 //Create Stripe checkout page
 // app.post("/create-checkout-session", async (req, res) => {
